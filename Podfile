@@ -10,7 +10,6 @@ target 'DI Test' do
   target 'DI TestTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'OCMock'
   end
 
 end

@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <OCMock/OCMock.h>
 #import "NetworkMock.h"
 #import "KacangService.h"
 
