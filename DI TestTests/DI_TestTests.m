@@ -7,8 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
+#import "NetworkMock.h"
+#import "KacangService.h"
 
-@interface DI_TestTests : XCTestCase
+@interface DI_TestTests : XCTestCase {
+    NetworkMock *networkManager;
+}
 
 @end
 
@@ -16,6 +21,7 @@
 
 - (void)setUp {
     [super setUp];
+    networkManager = [NetworkMock new];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -24,9 +30,49 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testGetKacang1 {
+    networkManager.mockResponse = @"1 kacang";
+    KacangService *kacangService = [[KacangService alloc] initWitkNetworkManager:networkManager];
+    [kacangService getKacangWitCompletion:^(NSString * _Nullable response) {
+        BOOL valid = [response isEqualToString:@"Poor"];
+        XCTAssertTrue(valid);
+    }];
+}
+
+- (void)testGetKacang2 {
+    networkManager.mockResponse = @"2 kacang";
+    KacangService *kacangService = [[KacangService alloc] initWitkNetworkManager:networkManager];
+    [kacangService getKacangWitCompletion:^(NSString * _Nullable response) {
+        BOOL valid = [response isEqualToString:@"Good"];
+        XCTAssertTrue(valid);
+    }];
+}
+
+- (void)testGetKacang3 {
+    networkManager.mockResponse = @"3 kacang";
+    KacangService *kacangService = [[KacangService alloc] initWitkNetworkManager:networkManager];
+    [kacangService getKacangWitCompletion:^(NSString * _Nullable response) {
+        BOOL valid = [response isEqualToString:@"Excelent"];
+        XCTAssertTrue(valid);
+    }];
+}
+
+- (void)testGetKacang4 {
+    networkManager.mockResponse = @"4 kacang";
+    KacangService *kacangService = [[KacangService alloc] initWitkNetworkManager:networkManager];
+    [kacangService getKacangWitCompletion:^(NSString * _Nullable response) {
+        BOOL valid = [response isEqualToString:@"Perfect"];
+        XCTAssertTrue(valid);
+    }];
+}
+
+- (void)testUnexpectedResponse {
+    networkManager.mockResponse = @"awjelkwja";
+    KacangService *kacangService = [[KacangService alloc] initWitkNetworkManager:networkManager];
+    [kacangService getKacangWitCompletion:^(NSString * _Nullable response) {
+        BOOL valid = [response isEqualToString:@"unexpected"];
+        XCTAssertTrue(valid);
+    }];
 }
 
 - (void)testPerformanceExample {
